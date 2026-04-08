@@ -592,17 +592,17 @@ def analyze_monitor(
 
     if edid_raw:
         a.hdmi = parse_cea_hdmi(edid_raw)
-        # CEA'daki HDMI VSDB baglanti tipini onaylar
-        if a.hdmi.is_hdmi and connector_type == "Bilinmiyor":
-            a.connector_type = "HDMI"
-            connector_type   = "HDMI"
+    a.connector_type = _resolve_connector_type(
+        connector_type, connector_name, device_id, a.hdmi
+    )
 
-    is_hdmi = "hdmi" in connector_type.lower()
+    is_hdmi = a.connector_type == "HDMI"
+    is_dp   = a.connector_type == "DisplayPort"
 
     if is_hdmi:
         bw = a.hdmi.max_bandwidth_gbps
         a.max_bandwidth_gbps = a.effective_bandwidth_gbps = bw
-    elif edid_info:
+    elif is_dp and edid_info:
         a.dp = estimate_dp_capabilities(edid_info)
         a.max_bandwidth_gbps = a.effective_bandwidth_gbps = a.dp.max_bandwidth_gbps
 
@@ -612,12 +612,32 @@ def analyze_monitor(
     return a
 
 
+def _resolve_connector_type(
+    connector_type: str, connector_name: str, device_id: str, hdmi: HDMICapabilities
+) -> str:
+    ctype = (connector_type or "").lower()
+    if "hdmi" in ctype:
+        return "HDMI"
+    if "displayport" in ctype:
+        return "DisplayPort"
+
+    source = " ".join([connector_name or "", device_id or ""]).lower()
+    if "hdmi" in source:
+        return "HDMI"
+    if "displayport" in source or "display port" in source:
+        return "DisplayPort"
+
+    if hdmi.is_hdmi:
+        return "HDMI"
+    return "Bilinmiyor"
+
+
 def _calculate_quality(a: CableAnalysis):
     score  = 100
     issues = []
 
-    is_hdmi = "hdmi" in a.connector_type.lower()
-    is_dp   = "displayport" in a.connector_type.lower()
+    is_hdmi = a.connector_type == "HDMI"
+    is_dp   = a.connector_type == "DisplayPort"
 
     if not a.edid:
         score -= 30
@@ -673,8 +693,8 @@ def _calculate_quality(a: CableAnalysis):
 
 def _calculate_features(a: CableAnalysis) -> list:
     feats   = []
-    is_hdmi = "hdmi" in a.connector_type.lower()
-    is_dp   = "displayport" in a.connector_type.lower()
+    is_hdmi = a.connector_type == "HDMI"
+    is_dp   = a.connector_type == "DisplayPort"
 
     if is_hdmi and a.hdmi.is_hdmi:
         feats.append(f"HDMI {a.hdmi.version}")
@@ -948,8 +968,14 @@ class CableTestApp:
 
     # -------------------------------------------------------
     def _show_analysis(self, a: CableAnalysis):
-        is_hdmi    = "hdmi" in a.connector_type.lower()
-        type_color = ACCENT_PURPLE if is_hdmi else ACCENT_CYAN
+        is_hdmi = a.connector_type == "HDMI"
+        is_dp   = a.connector_type == "DisplayPort"
+        if is_hdmi:
+            type_color = ACCENT_PURPLE
+        elif is_dp:
+            type_color = ACCENT_CYAN
+        else:
+            type_color = ACCENT_YELLOW
 
         # Ayirici baslik
         sep = tk.Frame(self.content, bg=BG_CARD2, padx=15, pady=6)
@@ -1035,11 +1061,15 @@ class CableTestApp:
             if a.hdmi.max_tmds_clock_mhz:
                 self._kv(g, "Max TMDS",
                          f"{a.hdmi.max_tmds_clock_mhz} MHz", row); row += 1
-        else:
+        elif is_dp:
             self._kv(g, "DP Versiyon (tahmini)", a.dp.estimated_version,
                      row, ACCENT_GREEN); row += 1
             self._kv(g, "Tahmini Max BW",
                      f"{a.dp.max_bandwidth_gbps:.1f} Gbps", row); row += 1
+        else:
+            self._kv(g, "Baglanti Durumu",
+                     "HDMI/DisplayPort net tespit edilemedi",
+                     row, ACCENT_YELLOW); row += 1
 
         # --- Bant Genisligi ---
         bw_body = self._card("BANT GENISLIGI")
@@ -1051,7 +1081,12 @@ class CableTestApp:
         bw_g.pack(fill="x")
         self._kv(bw_g, "Maks Efektif",
                  f"{a.effective_bandwidth_gbps:.1f} Gbps", 0, ACCENT_GREEN)
-        lbl2 = f"HDMI {a.hdmi.version}" if is_hdmi else f"DP {a.dp.estimated_version} (tahmini)"
+        if is_hdmi:
+            lbl2 = f"HDMI {a.hdmi.version}"
+        elif is_dp:
+            lbl2 = f"DP {a.dp.estimated_version} (tahmini)"
+        else:
+            lbl2 = "Bilinmiyor"
         self._kv(bw_g, "Versiyon", lbl2, 1)
 
         # --- Desteklenen Teknolojiler ---
