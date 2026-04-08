@@ -8,7 +8,7 @@ ve destekledigi teknolojileri analiz eder.
 * Windows 10/11 uzerinde calisir (yonetici yetkisi gerekmez)
 * DisplayPort VE HDMI kablo destegi
 * EDID Windows kayit defterinden okunur
-* HDMI versiyonu CEA-861 eklenti blogundan algilaniir
+* HDMI versiyonu CEA-861 eklenti blogundan algilanir
 * DP bant genisligi EDID zamanlamalarindan tahmin edilir
   (Linux aksine Windows'ta DPCD dogrudan okunamaz)
 
@@ -512,7 +512,7 @@ def read_all_edids_from_registry() -> list:
 # Analiz
 # ============================================================
 def find_monitors() -> list:
-    """Bagli tum monitörleri bulur ve analiz eder."""
+    """Bagli tum monitorleri bulur ve analiz eder."""
     wmi_mons   = get_wmi_monitors()
     edid_recs  = read_all_edids_from_registry()
 
@@ -856,7 +856,7 @@ class CableTestApp:
         self.content = tk.Frame(self.frame, bg=BG_DARK)
         self.content.pack(fill="both", expand=True, padx=10, pady=5)
 
-        self.status_var = tk.StringVar(value="Taranıyor…")
+        self.status_var = tk.StringVar(value="Taraniyor...")
         tk.Label(self.frame, textvariable=self.status_var,
                  font=("Segoe UI", 9), fg=FG_DIM,
                  bg=BG_DARK, anchor="w").pack(fill="x", padx=15, pady=(0, 8))
@@ -876,7 +876,7 @@ class CableTestApp:
                  font=("Segoe UI", 22, "bold"), fg=ACCENT_CYAN,
                  bg=BG_CARD2).pack()
         tk.Label(hdr,
-                 text="Kablo versiyonu  •  Kalite  •  Desteklenen teknolojiler"
+                 text="Kablo versiyonu  *  Kalite  *  Desteklenen teknolojiler"
                       "  |  Windows 10/11",
                  font=("Segoe UI", 10), fg=FG_DIM, bg=BG_CARD2).pack()
 
@@ -892,7 +892,7 @@ class CableTestApp:
             )
             return
 
-        self.status_var.set("Monitorler taranıyor…")
+        self.status_var.set("Monitorler taraniyor...")
         self.root.update_idletasks()
 
         analyses = find_monitors()
@@ -915,7 +915,7 @@ class CableTestApp:
                   bg=ACCENT_CYAN, activebackground=ACCENT_BLUE,
                   relief="flat", padx=20, pady=8, cursor="hand2").pack()
 
-        self.status_var.set(f"Tamamlandi – {len(analyses)} monitor bulundu")
+        self.status_var.set(f"Tamamlandi - {len(analyses)} monitor bulundu")
 
     # -------------------------------------------------------
     def _show_error(self, msg):
@@ -958,16 +958,16 @@ class CableTestApp:
                  font=("Segoe UI", 13, "bold"), fg=type_color,
                  bg=BG_CARD2).pack(anchor="w")
 
-        # --- Üst satir: Kalite + Baglanti ---
+        # --- Ust satir: Kalite + Baglanti ---
         top = tk.Frame(self.content, bg=BG_DARK)
         top.pack(fill="x", pady=4)
         top.columnconfigure(0, weight=1)
         top.columnconfigure(1, weight=2)
 
-        # Kalite kartı
+        # Kalite karti
         sc_card = tk.Frame(top, bg=BG_CARD, padx=15, pady=12)
         sc_card.grid(row=0, column=0, sticky="nsew", padx=(0, 4))
-        tk.Label(sc_card, text="KABLO KALİTESİ",
+        tk.Label(sc_card, text="KABLO KALITESI",
                  font=("Segoe UI", 13, "bold"), fg=ACCENT_CYAN,
                  bg=BG_CARD).pack()
         tk.Frame(sc_card, bg=ACCENT_BLUE, height=1).pack(fill="x", pady=(4, 8))
@@ -993,10 +993,10 @@ class CableTestApp:
                      bg=BG_CARD, anchor="w",
                      wraplength=260).pack(anchor="w", pady=1)
 
-        # Baglanti bilgi kartı
+        # Baglanti bilgi karti
         conn_card = tk.Frame(top, bg=BG_CARD, padx=15, pady=12)
         conn_card.grid(row=0, column=1, sticky="nsew", padx=(4, 0))
-        tk.Label(conn_card, text="BAĞLANTI BİLGİSİ",
+        tk.Label(conn_card, text="BAGLANTI BILGISI",
                  font=("Segoe UI", 13, "bold"), fg=ACCENT_CYAN,
                  bg=BG_CARD).pack(anchor="w")
         tk.Frame(conn_card, bg=ACCENT_BLUE, height=1).pack(fill="x", pady=(4, 8))
@@ -1005,7 +1005,7 @@ class CableTestApp:
         g.pack(fill="x")
         row = 0
         self._kv(g, "Baglanti Tipi", a.connector_type, row, type_color); row += 1
-        self._kv(g, "Adaptör",       a.connector_name,  row); row += 1
+        self._kv(g, "Adaptor",       a.connector_name,  row); row += 1
         if a.device_id:
             self._kv(g, "Cihaz ID", a.device_id, row, FG_DIM); row += 1
 
@@ -1042,7 +1042,7 @@ class CableTestApp:
                      f"{a.dp.max_bandwidth_gbps:.1f} Gbps", row); row += 1
 
         # --- Bant Genisligi ---
-        bw_body = self._card("BANT GENİŞLİĞİ")
+        bw_body = self._card("BANT GENISLIGI")
         bar = BandwidthBar(bw_body)
         bar.pack(fill="x", pady=5)
         bar.set_values(0.0, a.effective_bandwidth_gbps)
@@ -1055,7 +1055,7 @@ class CableTestApp:
         self._kv(bw_g, "Versiyon", lbl2, 1)
 
         # --- Desteklenen Teknolojiler ---
-        feat_body = self._card("DESTEKLENEN TEKNOLOJİLER")
+        feat_body = self._card("DESTEKLENEN TEKNOLOJILER")
         cols = 2
         for i, feat in enumerate(a.supported_features):
             r_idx, col = divmod(i, cols)
@@ -1069,7 +1069,7 @@ class CableTestApp:
                 row=r_idx, column=col, sticky="w", padx=(0, 30), pady=1)
 
         # --- Cozunurluk Tablosu ---
-        res_body = self._card("ÇÖZÜNÜRLÜK DESTEĞİ")
+        res_body = self._card("COZUNURLUK DESTEGI")
         hdr_f = tk.Frame(res_body, bg=BG_CARD2)
         hdr_f.pack(fill="x")
         for text, ww in [("Cozunurluk", 120), ("Hz", 50),
@@ -1090,7 +1090,7 @@ class CableTestApp:
             tk.Label(rf, text=f"{r['req']:.1f} Gbps",
                      font=("Segoe UI", 9), fg=FG_DIM,
                      bg=BG_CARD, width=11, anchor="w").pack(side="left", padx=5)
-            st_text  = "DESTEKLİ" if r["ok"] else "YETERSİZ"
+            st_text  = "DESTEKLI" if r["ok"] else "YETERSIZ"
             st_color = ACCENT_GREEN if r["ok"] else ACCENT_RED
             tk.Label(rf, text=st_text,
                      font=("Segoe UI", 9, "bold"), fg=st_color,
