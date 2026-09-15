@@ -1,6 +1,24 @@
 # DisplayPort Kablo Test
 
-DisplayPort kablosunun versiyonunu, kalitesini, lane durumunu ve desteklediği maksimum çözünürlükleri ölçen araç.
+DisplayPort bağlantı bilgilerini incelemek için deneysel bir Python aracı. Linux'ta DPCD/EDID bilgilerini okur; Windows'ta ayrı bir arayüz sunar.
+
+[English guide](README.en.md) · [Katkı rehberi](CONTRIBUTING.md) · [Geliştirme planı](ROADMAP.md)
+
+## Hızlı deneme — donanım gerektirmez
+
+```bash
+git clone https://github.com/benerdeneme/Displayportcabletest.git
+cd Displayportcabletest
+python3 dp_cable_test.py --demo
+```
+
+Demo verileri simülasyondur. Codespaces ortamı da demo ve otomatik testler içindir; bilgisayarının ekran bağlantısına erişemez.
+
+## Sonuçları yorumlama
+
+Bu araç bir kablo sertifikasyon veya fiziksel sinyal ölçüm cihazı değildir. DPCD revizyonu ve yetenekleri, bağlı cihazın bildirdiği bilgilerdir; tek başına kablonun sürümünü veya kalitesini kanıtlamaz. Kalite puanı bir yazılım sezgisidir; çözünürlük tablosu yaklaşık bant genişliği hesabıdır. HDR, Adaptive Sync ve benzeri bazı özellik etiketleri de tahmin içerir. Donanım üzerinde doğrulanmış destek olarak değerlendirilmemelidir.
+
+Çoklu monitörde AUX aygıtının doğru konnektörle eşleştiğini doğrula. UHBR çözümlemesi ve Windows sonuçları ek donanım testine ihtiyaç duyar. Ayrıntılar [geliştirme planında](ROADMAP.md).
 
 Linux (CLI + GUI) ve Windows (GUI) desteklenir.
 
@@ -8,12 +26,12 @@ Linux (CLI + GUI) ve Windows (GUI) desteklenir.
 
 ## Özellikler
 
-- **DP 1.0 – 2.1** tam versiyon tespiti (DPCD Rev okuması)
+- **DPCD revizyonu** okuma ve sürüm etiketi
 - **HBR / HBR2 / HBR3** ve **UHBR10 / UHBR13.5 / UHBR20** (DP 2.0) desteği
 - **4 lane** bireysel CR / EQ / SYM senkron durumu
 - **Kalite puanı** (0-100) — düşürülmüş link hızı, lane sorunları, hizalama hataları
 - **Bant genişliği hesabı** — 8b/10b ve 128b/132b encoding overhead'i dahil
-- **Maksimum çözünürlük tablosu** — 8K/5K/4K/WQHD/FHD × 60-360 Hz
+- **Tahmini çözünürlük tablosu** — 8K/5K/4K/WQHD/FHD × 60-360 Hz
 - **DSC (Display Stream Compression)** desteği tespiti
 - **MST / FEC / TPS3 / TPS4** özellik bayrakları
 - **EDID** monitor bilgisi (üretici, model, seri, panel boyutu)
