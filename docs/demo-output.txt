@@ -1,0 +1,101 @@
+SYNTHETIC DEMO — not a real hardware measurement.
+
+========================================================================
+   DISPLAYPORT KABLO TEST PROGRAMI
+========================================================================
+
+  [DEMO MODU] Gercek donanim kullanilmiyor.
+
+
+--- BAGLANTI BILGISI ---------------------------------------
+  Connector: card0-DP-1 (DEMO)
+  AUX Device: /dev/drm_dp_aux0 (simule)
+  Monitor: SAM Odyssey G9
+  Seri No: H1AK500000
+  Uretim: Hafta 14, 2022
+  EDID Versiyon: 1.4
+  Panel Cozunurlugu: 5120x1440
+  Maks Yenileme: 240 Hz
+
+--- DISPLAYPORT VERSIYON & HIZ -----------------------------
+  DPCD Revizyon: 1.4
+  DP Versiyon: 1.4
+  Max Link Rate: 8.10 Gbps/lane (HBR3)
+  Max Lane Sayisi: 4
+  Toplam Bant Genisligi: 32.40 Gbps (ham)
+  Efektif Bant Genisligi: 25.92 Gbps (8b/10b sonrasi)
+
+--- OZELLIKLER ---------------------------------------------
+  Enhanced Framing: Evet
+  TPS3: Evet
+  TPS4: Evet
+  MST (Daisy-Chain): Hayir
+  FEC: Evet
+  DSC: Evet
+  UHBR (128b/132b): Hayir
+
+--- AKTIF LINK DURUMU --------------------------------------
+  Aktif Link Rate: 8.10 Gbps/lane
+  Aktif Lane Sayisi: 4
+  Aktif Bant Genisligi: 25.92 Gbps
+
+  Lane   CR    EQ    SYM   Durum
+  -------------------------------------
+   0     OK    OK    OK    SENKRON
+   1     OK    OK    OK    SENKRON
+   2     OK    OK    OK    SENKRON
+   3     OK    OK    OK    SENKRON
+  Lane Hizalama: EVET
+
+--- KABLO KALITE DEGERLENDIRMESI ---------------------------
+  ########################################  100/100  MUKEMMEL
+
+  Sorun bulunamadi.
+
+--- DESTEKLENEN TEKNOLOJILER -------------------------------
+  + DisplayPort 1.4
+  + HBR3 (8.10 Gbps/lane)
+  + 4x Lane
+  + Enhanced Framing
+  + TPS3 (Link Training Pattern 3)
+  + TPS4 (Link Training Pattern 4)
+  + FEC (Forward Error Correction)
+  + DSC (Display Stream Compression)
+  + HDR10 / HDR10+
+  + 10-bit / 12-bit Renk Derinligi
+  + Adaptive Sync (FreeSync / G-Sync Uyumlu)
+  + DP Audio (7.1 Surround)
+
+--- DESTEKLENEN COZUNURLUKLER ------------------------------
+  Cozunurluk                Hz     Gerekli         Durum
+  --------------------------------------------------------
+  8K (7680x4320)           60   50.6 Gbps    DSC GEREK
+  8K (7680x4320)          120  101.3 Gbps    YETERSIZ
+  8K (7680x4320)          144  121.5 Gbps    YETERSIZ
+  8K (7680x4320)          165  139.3 Gbps    YETERSIZ
+  8K (7680x4320)          240  202.6 Gbps    YETERSIZ
+  8K (7680x4320)          360  303.9 Gbps    YETERSIZ
+  5K (5120x2880)           60   22.5 Gbps    DESTEKLI
+  5K (5120x2880)          120   45.0 Gbps    DSC GEREK
+  5K (5120x2880)          144   54.0 Gbps    DSC GEREK
+  5K (5120x2880)          165   61.9 Gbps    DSC GEREK
+  5K (5120x2880)          240   90.0 Gbps    YETERSIZ
+  5K (5120x2880)          360  135.0 Gbps    YETERSIZ
+  4K (3840x2160)           60   12.7 Gbps    DESTEKLI
+  4K (3840x2160)          120   25.3 Gbps    DESTEKLI
+  4K (3840x2160)          144   30.4 Gbps    DSC GEREK
+  4K (3840x2160)          165   34.8 Gbps    DSC GEREK
+  4K (3840x2160)          240   50.6 Gbps    DSC GEREK
+  4K (3840x2160)          360   76.0 Gbps    DSC GEREK
+  WQHD (2560x1440)         60    5.6 Gbps    DESTEKLI
+  WQHD (2560x1440)        120   11.3 Gbps    DESTEKLI
+  WQHD (2560x1440)        144   13.5 Gbps    DESTEKLI
+  WQHD (2560x1440)        165   15.5 Gbps    DESTEKLI
+  WQHD (2560x1440)        240   22.5 Gbps    DESTEKLI
+  WQHD (2560x1440)        360   33.8 Gbps    DSC GEREK
+  FHD (1920x1080)          60    3.2 Gbps    DESTEKLI
+  FHD (1920x1080)         120    6.3 Gbps    DESTEKLI
+  FHD (1920x1080)         144    7.6 Gbps    DESTEKLI
+  FHD (1920x1080)         165    8.7 Gbps    DESTEKLI
+  FHD (1920x1080)         240   12.7 Gbps    DESTEKLI
+  FHD (1920x1080)         360   19.0 Gbps    DESTEKLI
